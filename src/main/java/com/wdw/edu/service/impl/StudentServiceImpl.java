@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -26,23 +27,24 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     /**
      * 分页查询获取学生
      */
-    public List<Student> GetStudentByPage() {
-        Page<Student> page = new Page<>(1,5);
+    public List<Student> GetStudentByPage(int current,int size) {
+        Page<Student> page = new Page<>(current,size);
         studentMapper.selectPage(page, null);
         return page.getRecords();
     }
 
     /**
      * 新增学生
-     */
+     *
     public void InsertStudent(Student student) {
         studentMapper.insert(student);
     }
+     */
 
     /**
      * 删除学生(通过Id)
      */
-    public void DeleteStudent(int id) {
-        studentMapper.deleteById(id);
+    public void DeleteStudent(List idList) {
+        studentMapper.deleteBatchIds(idList);
     }
 }
